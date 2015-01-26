@@ -34,8 +34,25 @@ angular.module("myApp",[
 			// My Earnings Info
 			$scope.earnings.tipTotal += $scope.charges.tip;
 			$scope.earnings.mealCount++;
-			$scope.earnings.avgTip += $scope.earnings.tipTotal / $scope.earnings.mealCount;
 		};
+
+
+		$scope.watchNewVariables = function() {
+
+			$scope.$watch('computeTotals', function(){
+
+				if ($scope.earnings.mealCount != 0) {
+
+					$scope.earnings.avgTip = $scope.earnings.tipTotal / $scope.earnings.mealCount;
+
+				} 
+				
+			});
+		
+		};
+
+		
+
 
 		$scope.resetMealDetails = function() {
 			$scope.mealDetails.$setPristine()
@@ -62,7 +79,7 @@ angular.module("myApp",[
 			if ($scope.mealDetails.$valid) {
 
 				$scope.computeTotals();
-
+				$scope.watchNewVariables();
 			}
 		}
 
