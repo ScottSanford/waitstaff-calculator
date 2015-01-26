@@ -1,0 +1,62 @@
+.container {
+	width:1024px;
+	padding-bottom:25px;
+	margin-top: 25px;
+}
+
+.page-header {
+	border-bottom: 2px solid #eee;
+	margin-top:25px;
+}
+
+.h1 {
+	text-align: center;
+	font-weight: 300;
+}
+
+.header {
+	display: block;
+	padding: 20px 10px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	background: rgba(248,248,248,.9);
+	font-size: 25px;
+	font-weight: 300;
+	color: #232323;
+}
+
+label {
+	margin-bottom: 25px;
+}
+
+hr {
+	margin-top: 0;
+	margin-bottom: 10px;
+	border-top: 3px solid #eee;
+}
+
+.error {
+	color:red;
+	font-style: italic;
+	font-weight: 300;
+}
+
+#my-earnings {
+	margin-top: 20px;
+}
+
+.output {
+	position: relative;
+	top:9px;
+}
+
+#customer-charges fieldset, #my-earnings fieldset {
+	padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+
+	#customer-charges {
+		margin-top: 20px;
+	}
+	
+}
