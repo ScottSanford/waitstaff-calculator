@@ -2,7 +2,6 @@ angular.module("myApp",[
 		'ngMessages'
 	])
 
-	.constant('VERSION', 3)
 	.run(function(VERSION, $rootScope){
 		$rootScope = VERSION;
 	})
@@ -46,7 +45,11 @@ angular.module("myApp",[
 					$scope.earnings.avgTip = $scope.earnings.tipTotal / $scope.earnings.mealCount;
 
 				} 
+<<<<<<< HEAD
 
+=======
+				
+>>>>>>> 07dc8ecb54f3e0c845a944ff93f1d1b80b6e4577
 			});
 		
 		};
