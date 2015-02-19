@@ -1,66 +1,88 @@
 angular.module("myApp",[
-		'ngMessages', 
-		'ngRoute'
+		'ngMessages'
 	])
 
-	.config(function($routeProvider){
-		$routeProvider
-			.when('/', {
-				templateUrl : '../views/home.html'
-			})
-			.when('/new_meal', {
-				templateUrl : '../views/new_meal.html', 
-				controller : 'NewMealCtrl', 
-				resolve : {
-					resetCharges : function(myEarningsService) {
-
-					}
-				}
-			})
-			.when('/my_earnings', {
-				templateUrl: '../views/my_earnings.html', 
-				controller: 'MyEarningsCtrl'
-			})
-			.otherwise({
-				redirectTo: '/'
-			})
+	.constant('VERSION', 3)
+	.run(function(VERSION, $rootScope){
+		$rootScope = VERSION;
 	})
 
-	.controller("NewMealCtrl", function($scope, newMealService, myEarningsService){
+	.controller("waitstaffCtrl", function($scope){
+		
+		var init = function () {			
+				$scope.charges = {
+					subtotal : 0,
+					tip : 0,
+					total : 0,
+				};
 
-		$scope.charges = newMealService;
+				$scope.earnings =  {
+					tipTotal : 0,
+					mealCount : 0,
+					avgTip : 0,
+				};
+		}
+		
+		init();
 
-		$scope.cancelForm = function() {
-			$scope.baseMealPrice = ''; 
+		$scope.computeTotals = function() {
+			// Customer Charges
+			$scope.charges.subtotal = ($scope.baseMealPrice * (1 + $scope.taxRate/100));
+			$scope.charges.tip = $scope.charges.subtotal * $scope.tipPercentage/100;
+			$scope.charges.total = $scope.charges.subtotal + $scope.charges.tip;
+
+			// My Earnings Info
+			$scope.earnings.tipTotal += $scope.charges.tip;
+			$scope.earnings.mealCount++;
+		};
+
+
+		$scope.watchNewVariables = function() {
+
+			$scope.$watch('computeTotals', function(){
+
+				if ($scope.earnings.mealCount != 0) {
+
+					$scope.earnings.avgTip = $scope.earnings.tipTotal / $scope.earnings.mealCount;
+
+				} 
+
+			});
+		
+		};
+
+		
+
+
+		$scope.resetMealDetails = function() {
+			$scope.mealDetails.$setPristine()
+			$scope.baseMealPrice = '';
 			$scope.taxRate = '';
 			$scope.tipPercentage = '';
-		}
+		};
 
-		$scope.addMeal = function() {
-			if ($scope.formDetails.$valid) {
-				newMealService.computeTotals($scope.baseMealPrice, $scope.taxRate, $scope.tipPercentage);
-				myEarningsService.add(newMealService.tip);
+		$scope.resetCharges = function() {
+			$scope.charges.baseMealPrice = 0;
+			$scope.charges.taxRate = 0;
+			$scope.charges.tipPercentage = 0;
+		};
+
+
+
+		$scope.resetAll = function() {
+			$scope.resetMealDetails();
+			init();	
+		};
+
+
+		$scope.submitMealDetails = function() {
+			if ($scope.mealDetails.$valid) {
+
+				$scope.computeTotals();
+				$scope.watchNewVariables();
 			}
 		}
-       
-	})
 
-    .controller("MyEarningsCtrl", function($scope, newMealService, myEarningsService) {
+	});
 
-    	$scope.myearnings = myEarningsService;	
-
-    	$scope.resetAll = function() {
-    		myEarningsService.resetEarnings();
-    		newMealService.resetCharges();
-    	}
-
-
-    })	
-
-
-
-
-
-
-
-
+	

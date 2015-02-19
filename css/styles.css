@@ -14,10 +14,6 @@
 	font-weight: 300;
 }
 
-.links {
-	font-size: 1.2em;
-}
-
 .header {
 	display: block;
 	padding: 20px 10px;
@@ -26,10 +22,6 @@
 	font-size: 25px;
 	font-weight: 300;
 	color: #232323;
-}
-
-.home-text {
-	font-size: 1.3em;
 }
 
 label {
@@ -57,10 +49,6 @@ hr {
 	top:9px;
 }
 
-#customer-charges {
-	margin-top: 70px;
-}
-
 #customer-charges fieldset, #my-earnings fieldset {
 	padding-top: 10px;
 }
@@ -71,8 +59,4 @@ hr {
 		margin-top: 20px;
 	}
 	
-}
-
-.btn-reset {
-
 }
